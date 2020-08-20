@@ -1,5 +1,7 @@
 def PatternCount(Text, Pattern):
     """
+    Computes the number of times that a k-mer Pattern appears as a substring of Text.
+
     Sample Input:
       GCGCG
       GCG
