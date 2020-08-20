@@ -1,4 +1,11 @@
 def PatternCount(Text, Pattern):
+    """
+    Sample Input:
+      GCGCG
+      GCG
+    Sample Output:
+      2
+    """
     count = 0
     for i in range(0, len(Text) - len(Pattern) + 1):
         if Pattern == Text[i : i + len(Pattern)]:
