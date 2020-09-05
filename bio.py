@@ -165,3 +165,18 @@ def number_to_pattern(number, dnaa_length):
         result += M[digit]
         number -= digit * addend
     return result
+
+
+def frequences(genome, dnaa_length):
+    array_length = 0
+    for i in reversed(range(dnaa_length)):
+        array_length += (4 ** i) * 3
+    array_length += 1
+
+    freq_array = [0] * array_length
+
+    for i in range(len(genome) - dnaa_length + 1):
+        pattern = genome[i : i + dnaa_length]
+        freq_array[pattern_to_number(pattern)] += 1
+
+    return freq_array
