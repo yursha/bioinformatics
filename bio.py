@@ -29,14 +29,14 @@ def reverse_complement(sequence):
     return complement(sequence)[::-1]
 
 
-def FrequentWords(Text, k):
+def freq_words(text, k):
     """
     Finds the most frequent k-mers in a string.
 
     Input:
-      A string Text and an integer k.
+      A string text and an integer k.
     Output:
-      All most frequent k-mers in Text.
+      All most frequent k-mers in text.
 
     Sample input:
       ACGTTGCATGTCGCATGATGCATGAGAGCT
@@ -44,22 +44,22 @@ def FrequentWords(Text, k):
     Sample output:
       CATG GCAT
     """
-    freqMap = {}
+    freq_map = {}
     max = 0
-    for i in range(len(Text) - k + 1):
-        pattern = Text[i : i + k]
-        count = freqMap[pattern] if pattern in freqMap else 0
+    for i in range(len(text) - k + 1):
+        pattern = text[i : i + k]
+        count = freq_map[pattern] if pattern in freq_map else 0
         count += 1
         if count > max:
             max = count
-        freqMap[pattern] = count
+        freq_map[pattern] = count
 
-    return [pattern for pattern in freqMap if freqMap[pattern] == max]
+    return [pattern for pattern in freq_map if freq_map[pattern] == max]
 
 
-def PatternCount(Text, Pattern):
+def pattern_count(text, pattern):
     """
-    Computes the number of times that a k-mer Pattern appears as a substring of Text.
+    Computes the number of times that a k-mer pattern appears as a substring of text.
 
     Sample Input:
       GCGCG
@@ -68,7 +68,7 @@ def PatternCount(Text, Pattern):
       2
     """
     count = 0
-    for i in range(0, len(Text) - len(Pattern) + 1):
-        if Pattern == Text[i : i + len(Pattern)]:
+    for i in range(0, len(text) - len(pattern) + 1):
+        if pattern == text[i : i + len(pattern)]:
             count += 1
     return count
