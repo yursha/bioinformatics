@@ -21,7 +21,7 @@ def complement(sequence):
         elif c == "C":
             reverse += "G"
         else:
-            raise Error("Unsupported sequence character")
+            raise RuntimeError("Unsupported sequence character: '%s'" % c)
     return reverse
 
 
