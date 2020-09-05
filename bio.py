@@ -1,6 +1,6 @@
 def find(sequence, pattern):
     """
-    Returns a list of positions where `patterns` is found in `sequence`.
+    Returns a list of positions where `pattern` is found in `sequence`.
 
     Use this function to check if a presumed DnaA box sequence occurs
     outsite the ori region. If it does, the presumption may be wrong.
@@ -86,3 +86,61 @@ def pattern_count(text, pattern):
         if pattern == text[i : i + len(pattern)]:
             count += 1
     return count
+
+
+def find_clupms(genome, dnaa_length, ori_length, min_freq):
+    freq_map = {}
+    reverse_map = {}
+    result = set()
+    for i in range(len(genome) - dnaa_length + 1):
+        if i > ori_length - dnaa_length:
+            for group in reverse_map.values():
+                # if group:
+                # print('Adding {} to result'.format(group))
+                result |= group
+            out_pattern = genome[
+                i
+                - ori_length
+                + dnaa_length
+                - 1 : i
+                - ori_length
+                + dnaa_length
+                + dnaa_length
+                - 1
+            ]
+            # print('slide out pattern {}'.format(out_pattern))
+            cnt = freq_map[out_pattern]
+            freq_map[out_pattern] = cnt - 1
+
+            if cnt == min_freq:
+                reverse_map[cnt].remove(out_pattern)
+                # print('slide out forget {}'.format(out_pattern))
+            elif cnt > min_freq:
+                reverse_map[cnt].remove(out_pattern)
+                # print('slide out forget {} = {}'.format(out_pattern, cnt))
+                reverse_map[cnt - 1].add(out_pattern)
+                # print('slide out remember {} = {}'.format(out_pattern, cnt - 1))
+
+        pattern = genome[i : i + dnaa_length]
+        # print('inspecting pattern {}'.format(pattern))
+        count = freq_map[pattern] if pattern in freq_map else 0
+        count += 1
+        freq_map[pattern] = count
+        # print('freq of pattern {} is {}'.format(pattern, count))
+
+        if count == min_freq:
+            if count not in reverse_map:
+                reverse_map[count] = set()
+            reverse_map[count].add(pattern)
+            # print('remember {} = {}'.format(pattern, count))
+        elif count > min_freq:
+            if count not in reverse_map:
+                reverse_map[count] = set()
+            reverse_map[count - 1].remove(pattern)
+            # print('forget {} = {}'.format(pattern, count - 1))
+            reverse_map[count].add(pattern)
+            # print('remember {} = {}'.format(pattern, count))
+
+    for group in reverse_map.values():
+        result |= group
+    return sorted(result)
