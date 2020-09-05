@@ -13,14 +13,14 @@ def FrequentWords(Text, k):
     Sample output:
       CATG GCAT
     """
-    patterns = {}
+    freqMap = {}
     max = 0
     for i in range(len(Text) - k + 1):
         pattern = Text[i : i + k]
-        count = patterns[pattern] if pattern in patterns else 0
+        count = freqMap[pattern] if pattern in freqMap else 0
         count += 1
         if count > max:
             max = count
-        patterns[pattern] = count
+        freqMap[pattern] = count
 
-    return [pattern for pattern in patterns if patterns[pattern] == max]
+    return [pattern for pattern in freqMap if freqMap[pattern] == max]
