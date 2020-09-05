@@ -1,3 +1,14 @@
+def find(sequence, pattern):
+    """
+  Returns a list of positions where `patterns` is found in `sequence`.
+  """
+    positions = []
+    for i in range(len(sequence) - len(pattern) + 1):
+        if pattern == sequence[i : i + len(pattern)]:
+            positions.append(i)
+    return positions
+
+
 def complement(sequence):
     reverse = ""
     for c in sequence:
