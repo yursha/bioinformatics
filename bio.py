@@ -29,6 +29,17 @@ def reverse_complement(sequence):
     return complement(sequence)[::-1]
 
 
+def find_reverse_complements(patterns):
+    groups = {}
+    for pattern in patterns:
+        compl = reverse_complement(pattern)
+        if compl in groups:
+            groups[compl] = pattern
+        else:
+            groups[pattern] = True
+    return [(k,) if groups[k] == True else (k, groups[k]) for k in groups]
+
+
 def freq_words(text, k):
     """
     Finds the most frequent k-mers in a string.
