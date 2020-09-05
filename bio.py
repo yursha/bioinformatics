@@ -144,3 +144,13 @@ def find_clupms(genome, dnaa_length, ori_length, min_freq):
     for group in reverse_map.values():
         result |= group
     return sorted(result)
+
+
+def pattern_to_number(pattern):
+    M = {"A": 0, "C": 1, "G": 2, "T": 3}
+    number = 0
+    power = len(pattern) - 1
+    for c in pattern:
+        number += M[c] * (4 ** power)
+        power -= 1
+    return number
