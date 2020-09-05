@@ -1,7 +1,10 @@
 def find(sequence, pattern):
     """
-  Returns a list of positions where `patterns` is found in `sequence`.
-  """
+    Returns a list of positions where `patterns` is found in `sequence`.
+
+    Use this function to check if a presumed DnaA box sequence occurs
+    outsite the ori region. If it does, the presumption may be wrong.
+    """
     positions = []
     for i in range(len(sequence) - len(pattern) + 1):
         if pattern == sequence[i : i + len(pattern)]:
