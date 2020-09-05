@@ -43,34 +43,6 @@ def find_reverse_complements(patterns):
     return [(k,) if groups[k] == True else (k, groups[k]) for k in groups]
 
 
-def freq_words(text, k):
-    """
-    Finds the most frequent k-mers in a string.
-
-    Input:
-      A string text and an integer k.
-    Output:
-      All most frequent k-mers in text.
-
-    Sample input:
-      ACGTTGCATGTCGCATGATGCATGAGAGCT
-      4
-    Sample output:
-      CATG GCAT
-    """
-    freq_map = {}
-    max = 0
-    for i in range(len(text) - k + 1):
-        pattern = text[i : i + k]
-        count = freq_map[pattern] if pattern in freq_map else 0
-        count += 1
-        if count > max:
-            max = count
-        freq_map[pattern] = count
-
-    return [pattern for pattern in freq_map if freq_map[pattern] == max]
-
-
 def pattern_count(text, pattern):
     """
     Computes the number of times that a k-mer pattern appears as a substring of text.
@@ -180,3 +152,31 @@ def frequences(genome, dnaa_length):
         freq_array[pattern_to_number(pattern)] += 1
 
     return freq_array
+
+
+def freq_words(text, k):
+    """
+    Finds the most frequent k-mers in a string.
+
+    Input:
+      A string text and an integer k.
+    Output:
+      All most frequent k-mers in text.
+
+    Sample input:
+      ACGTTGCATGTCGCATGATGCATGAGAGCT
+      4
+    Sample output:
+      CATG GCAT
+    """
+    freq_map = {}
+    max = 0
+    for i in range(len(text) - k + 1):
+        pattern = text[i : i + k]
+        count = freq_map[pattern] if pattern in freq_map else 0
+        count += 1
+        if count > max:
+            max = count
+        freq_map[pattern] = count
+
+    return [pattern for pattern in freq_map if freq_map[pattern] == max]
