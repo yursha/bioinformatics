@@ -154,3 +154,14 @@ def pattern_to_number(pattern):
         number += M[c] * (4 ** power)
         power -= 1
     return number
+
+
+def number_to_pattern(number, dnaa_length):
+    M = ["A", "C", "G", "T"]
+    result = ""
+    for i in reversed(range(dnaa_length)):
+        addend = 4 ** i
+        digit = number // addend
+        result += M[digit]
+        number -= digit * addend
+    return result
