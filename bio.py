@@ -54,7 +54,7 @@ def pattern_count(text, pattern):
       2
     """
     count = 0
-    for i in range(0, len(text) - len(pattern) + 1):
+    for i in range(len(text) - len(pattern) + 1):
         if pattern == text[i : i + len(pattern)]:
             count += 1
     return count
@@ -67,18 +67,11 @@ def find_clupms(genome, dnaa_length, ori_length, min_freq):
     for i in range(len(genome) - dnaa_length + 1):
         if i > ori_length - dnaa_length:
             for group in reverse_map.values():
-                # if group:
-                # print('Adding {} to result'.format(group))
                 result |= group
+
+            out_pattern_start_index = i - ori_length + dnaa_length - 1
             out_pattern = genome[
-                i
-                - ori_length
-                + dnaa_length
-                - 1 : i
-                - ori_length
-                + dnaa_length
-                + dnaa_length
-                - 1
+                out_pattern_start_index : out_pattern_start_index + dnaa_length
             ]
             # print('slide out pattern {}'.format(out_pattern))
             cnt = freq_map[out_pattern]
@@ -170,13 +163,23 @@ def freq_words(text, k):
       CATG GCAT
     """
     freq_map = {}
-    max = 0
+    max_value = 0
     for i in range(len(text) - k + 1):
         pattern = text[i : i + k]
         count = freq_map[pattern] if pattern in freq_map else 0
         count += 1
-        if count > max:
-            max = count
+        if count > max_value:
+            max_value = count
         freq_map[pattern] = count
 
-    return [pattern for pattern in freq_map if freq_map[pattern] == max]
+    return [pattern for pattern in freq_map if freq_map[pattern] == max_value]
+
+
+def freq_words2(text, k):
+    result = set()
+    freq_array = frequences(text, k)
+    max_freq = max(freq_array)
+    for i in range(len(freq_array)):
+        if freq_array[i] == max_freq:
+            result.add(number_to_pattern(i))
+    return result
